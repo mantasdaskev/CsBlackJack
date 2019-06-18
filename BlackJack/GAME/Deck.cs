@@ -11,10 +11,10 @@ namespace BlackJack.GAME
 
         public Deck()
         {
-            Initialize();
+            Make();
         }
 
-        public void Initialize()
+        public void Make()
         {
             cards = new List<Card>();
 
@@ -32,7 +32,7 @@ namespace BlackJack.GAME
         {
             if (cards.Count == 0)
             {
-                Initialize();
+                Make();
             }
 
             Card card = cards[cards.Count - 1];
