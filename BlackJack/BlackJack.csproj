@@ -50,7 +50,6 @@
     <Compile Include="GAME\Game.cs" />
     <Compile Include="GAME\GameController.cs" />
     <Compile Include="GAME\Player.cs" />
-    <Compile Include="MENUS\Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

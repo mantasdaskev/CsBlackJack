@@ -45,13 +45,6 @@ namespace BlackJack.GAME
             return _cards.Count;
         }
 
-        public override string ToString()
-        {
-            //TODO
-            string deckData = "";
-            return deckData;
-        }
-
         private void Shuffle()
         {
             Random random = new Random();

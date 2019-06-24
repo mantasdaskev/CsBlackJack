@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace BlackJack.GAME
 {
@@ -11,7 +7,7 @@ namespace BlackJack.GAME
     {
         private Game _game;
         private Player _player;
-        private string gameHeader = "---**** Back Jack ****---";
+        private readonly string gameHeader = "---**** Back Jack ****---";
 
         public GameController()
         {
@@ -106,7 +102,7 @@ namespace BlackJack.GAME
             do
             {
                 RenderGame();
-                Console.WriteLine("Choose a moove (h - hit, s - stay)");
+                Console.Write("Choose a moove (h - hit, s - stay): ");
                 string input = Console.ReadLine();
                 if (input.ToLower().Trim() == "h")
                 {
@@ -170,7 +166,6 @@ namespace BlackJack.GAME
             if (renderGame) RenderGame(true, true);
             Console.WriteLine();
             Console.WriteLine(msg);
-            //Console.WriteLine(_player.ToString());
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
