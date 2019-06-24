@@ -44,6 +44,11 @@ namespace BlackJack.GAME
             _handPlayer.Add(_deck.Draw());
         }
 
+        public void DrawDealerHand()
+        {
+            _handDealer.Add(_deck.Draw());
+        }
+
         public int HandPoints(List<Card> hand)
         {
             int points = 0;

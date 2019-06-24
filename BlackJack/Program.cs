@@ -13,7 +13,6 @@ namespace BlackJack
         {
             GameController gameController = new GameController();
             gameController.Play();
-            Console.ReadKey();
         }
     }
 }

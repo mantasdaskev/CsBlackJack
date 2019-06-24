@@ -11,6 +11,7 @@ namespace BlackJack.GAME
     {
         private Game _game;
         private Player _player;
+        private string gameHeader = "---**** Back Jack ****---";
 
         public GameController()
         {
@@ -21,7 +22,7 @@ namespace BlackJack.GAME
         {
             _player = new Player();
 
-            Console.WriteLine("---**** Back Jack ****---");
+            PrintGameHeader();
 
             Console.Write("Enter yout name: ");
             _player.Name = Console.ReadLine();
@@ -45,9 +46,10 @@ namespace BlackJack.GAME
             _game.DealPlayerHand(ParseChips("Enter bet amount: "), _player.Chips);
             _game.DealDealerHand();
 
+            char moove = '\0';
             do
             {
-                char moove = MakeAMoove();
+                if (moove != 's') moove = MakeAMoove();
 
                 if(_game.HandPoints(_game.HandPlayer) == 21)
                 {
@@ -68,15 +70,27 @@ namespace BlackJack.GAME
 
                 if (moove == 's')
                 {
-                    if(_game.HandPoints(_game.HandDealer) < _game.HandPoints(_game.HandPlayer))
+                    if (_game.HandPoints(_game.HandDealer) < 17)
+                    {
+                        _game.DrawDealerHand();
+                        RenderGame(true, true);
+                    }
+                    else if(_game.HandPoints(_game.HandDealer) == _game.HandPoints(_game.HandPlayer))
+                    {
+                        PrintEnd("It is a TIE!");
+                        return;
+                    }
+                    else if(_game.HandPoints(_game.HandDealer) < _game.HandPoints(_game.HandPlayer) ||
+                        _game.HandPoints(_game.HandDealer) > 21)
                     {
                         PlayerWon();
+                        return;
                     }
                     else
                     {
                         PlayerLost();
+                        return;
                     }
-                    return;
                 } else if (moove == 'h') {
                     if (_game.HandPoints(_game.HandPlayer) > 21)
                     {
@@ -92,7 +106,7 @@ namespace BlackJack.GAME
             do
             {
                 RenderGame();
-                Console.WriteLine("Choose a moove (h - hit)");
+                Console.WriteLine("Choose a moove (h - hit, s - stay)");
                 string input = Console.ReadLine();
                 if (input.ToLower().Trim() == "h")
                 {
@@ -103,7 +117,7 @@ namespace BlackJack.GAME
                 {
                     return 's';
                 }
-                Console.WriteLine("Invalid input!!!"); Thread.Sleep(2000);
+                Console.WriteLine("Invalid input!!!"); Thread.Sleep(1000);
             } while (true);
         }
 
@@ -123,18 +137,25 @@ namespace BlackJack.GAME
         private void RenderGame(bool showHands = true, bool showDealerHand = false)
         {
             Console.Clear();
+            PrintGameHeader();
             Console.WriteLine(_player.ToString());
             Console.WriteLine();
 
             if (showHands)
-            {                
+            {
+                int hiddenCardPoints = 0;
                 Console.WriteLine("Dealer's hand:");
                 if (showDealerHand)
                 {
                     Console.WriteLine(_game.HandDealer[0].ToString());
                 }
-                else Console.WriteLine("\U0001F0CF");
-                Console.WriteLine(_game.HandDealer[1].ToString());
+                else
+                {
+                    Console.WriteLine("\U00002593" + " ****");
+                    hiddenCardPoints = _game.HandDealer[0].Value;
+                }
+                for (int i = 1; i < _game.HandDealer.Count; i++) Console.WriteLine(_game.HandDealer[i].ToString());
+                Console.WriteLine("Points: " + (_game.HandPoints(_game.HandDealer) - hiddenCardPoints));
                 Console.WriteLine();
 
                 Console.WriteLine("Player's hand:");
@@ -149,10 +170,10 @@ namespace BlackJack.GAME
             if (renderGame) RenderGame(true, true);
             Console.WriteLine();
             Console.WriteLine(msg);
-            Console.WriteLine(_player.ToString());
+            //Console.WriteLine(_player.ToString());
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
-            Console.Read();
+            Console.ReadKey();
         }
 
         private void PlayerWon()
@@ -165,6 +186,12 @@ namespace BlackJack.GAME
         {
             _player.RecalcChips(-_game.BetAmount);
             PrintEnd("You have LOST this hand.");
+        }
+
+        private void PrintGameHeader()
+        {
+            Console.WriteLine(gameHeader);
+            Console.WriteLine();
         }
     }
 }
