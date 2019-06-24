@@ -14,5 +14,19 @@
         }
 
         public Card() { }
+
+        public override string ToString()
+        {
+            string type = "";
+            switch (Type)
+            {
+                case Type.CLUB : type = "\U00002663"; break;
+                case Type.DIAMOND : type = "\U00002666"; break;
+                case Type.HEART : type = "\U00002665"; break;
+                case Type.SPADE : type = "\U00002660"; break;
+            }
+
+            return $"{type} {Face.ToString()}";
+        }
     }
 }

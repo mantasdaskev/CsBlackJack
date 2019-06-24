@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.GAME;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace BlackJack
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("test");
+            GameController gameController = new GameController();
+            gameController.Play();
             Console.ReadKey();
         }
     }

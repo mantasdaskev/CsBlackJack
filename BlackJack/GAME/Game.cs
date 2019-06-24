@@ -9,29 +9,26 @@ namespace BlackJack.GAME
 {
     public class Game
     {
-        private int _chips;
         private Deck _deck;
         private List<Card> _handDealer;
         private List<Card> _handPlayer;
-        private int _betAmunt;
 
-        public Game(int chips)
+        public Game()
         {
-            _chips = chips;
             _deck = new Deck();
         }
 
         public List<Card> HandPlayer { get { return _handPlayer; } }
         public List<Card> HandDealer { get { return _handDealer; } }
+        public int BetAmount { get; private set; } = 0; //TODO: gal ir nereikes inicijuot, DELETE jei nereikes
 
-        public void DealPlayerHand(int betAmount)
+        public void DealPlayerHand(int betAmount, int usableChips)
         {
             _handPlayer = new List<Card>();
             _handPlayer.Add(_deck.Draw());
             _handPlayer.Add(_deck.Draw());
             _handPlayer.ForEach(c => c.Value = c.Face == Face.ACE ? c.Value + 10 : c.Value);
-            _betAmunt = betAmount;
-
+            BetAmount = betAmount > usableChips ? usableChips : betAmount; 
         }
 
         public void DealDealerHand()
@@ -40,6 +37,11 @@ namespace BlackJack.GAME
             _handDealer.Add(_deck.Draw());
             _handDealer.Add(_deck.Draw());
             _handDealer.ForEach(c => c.Value = c.Face == Face.ACE ? c.Value + 10 : c.Value);
+        }
+
+        public void DrawPlayerHand()
+        {
+            _handPlayer.Add(_deck.Draw());
         }
 
         public int HandPoints(List<Card> hand)
