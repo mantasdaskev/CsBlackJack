@@ -45,8 +45,6 @@ namespace BlackJack.GAME
             char moove = '\0';
             do
             {
-                if (moove != 's') moove = MakeAMoove();
-
                 if(_game.HandPoints(_game.HandPlayer) == 21)
                 {
                     if (_game.HandPoints(_game.HandDealer) == 21)
@@ -63,6 +61,8 @@ namespace BlackJack.GAME
                     PlayerLost();
                     return;
                 }
+
+                if (moove != 's') moove = MakeAMoove();
 
                 if (moove == 's')
                 {
@@ -173,13 +173,13 @@ namespace BlackJack.GAME
 
         private void PlayerWon()
         {
-            _player.RecalcChips(_game.BetAmount);
+            _player.AddChips(_game.BetAmount);
             PrintEnd("You have WON this hand!");
         }
         
         private void PlayerLost()
         {
-            _player.RecalcChips(-_game.BetAmount);
+            _player.AddChips(-_game.BetAmount);
             PrintEnd("You have LOST this hand.");
         }
 

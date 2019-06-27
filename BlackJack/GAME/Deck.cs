@@ -1,7 +1,5 @@
-﻿using System;
+﻿using BlackJack.GAME.Extentions;
 using System.Collections.Generic;
-
-using BlackJack.GAME.CardModels;
 
 namespace BlackJack.GAME
 {
@@ -22,10 +20,10 @@ namespace BlackJack.GAME
             {
                 for (int j = 0; j < 13; j++)
                 {
-                    _cards.Add(new Card((CardModels.Type)i, (Face)j, j <= 8 ? j + 1 : 10));
+                    _cards.Add(new Card((Suit)i, (Face)j, j <= 8 ? j + 1 : 10));
                 }
             }
-            Shuffle();
+            _cards.Shuffle();
         }
 
         public Card Draw()
@@ -43,20 +41,6 @@ namespace BlackJack.GAME
         public int GetCradsCount()
         {
             return _cards.Count;
-        }
-
-        private void Shuffle()
-        {
-            Random random = new Random();
-            int randomIndex = 0;
-
-            for (int i = 0; i < _cards.Count - 1; i++)
-            {
-                randomIndex = random.Next(i + 1);
-                Card card = _cards[randomIndex];
-                _cards[randomIndex] = _cards[i];
-                _cards[i] = card;
-            }
         }
     }
 }

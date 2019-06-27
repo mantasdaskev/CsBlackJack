@@ -11,7 +11,7 @@
                    $"Player chips: {Chips.ToString()}";
         }
 
-        internal void RecalcChips(int betAmount)
+        internal void AddChips(int betAmount)
         {
             Chips = Chips + betAmount;
         }
